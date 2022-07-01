@@ -1,0 +1,134 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Verift payments {% endblock title %} {% block style %}
+<style>
+    .Verify-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .Verify-box>div {
+        width: 300px;
+        margin: 50px 0px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #ecf0f2;
+        border-radius: 20px;
+        text-align: center;
+        padding: 30px 30px;
+    }
+    
+    .Verify-box>div .Verify-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        background-color: rgb(126, 124, 124);
+        margin: 0 auto;
+    }
+    
+    .Verify-box>div .Verify-icon i {
+        font-size: 30px;
+        padding: 14px;
+    }
+    
+    .Verify-box>div .Verify-icon i.successful {
+        color: white;
+    }
+    
+    .Verify-box>div .Verify-icon i.faild {
+        color: orangered;
+    }
+</style>
+
+
+{% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Verify payment</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+    <div class="uk-container">
+
+
+        <div class="Verify-box">
+            <div>
+                <div class="Verify-icon">
+                    {% if msg == 'successful' %}
+                    <i class="{{msg}} fas fa-check"></i> {% else %}
+                    <i class="{{msg}} fas fa-times"></i> {% endif %}
+                </div>
+                <h5>Payment {{msg.capitalize}}</h5>
+                <p>Your payment of ${{amount}} has been {{msg}} </p>
+                <p>Transaction ref : {{tr_rx}}</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %} {% block script %}
+<script>
+    function makePayment() {
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-0d7b44a8dcf6cde72885e28a0fb29a9e-X",
+            tx_ref: document.getElementById('depo_tx_ref').value,
+            amount: document.getElementById('depo_amount_in_usd').value,
+            currency: "USD",
+            payment_options: "card, banktransfer, ussd",
+            redirect_url: "https://glaciers.titanic.com/handle-flutterwave-payment",
+            meta: {
+                consumer_id: 23,
+                consumer_mac: "92a3-912ba-1192a",
+            },
+            customer: {
+                email: document.getElementById('depo_email').value,
+                phone_number: document.getElementById('depo_phone').value,
+                name: document.getElementById('depo_name').value,
+            },
+            customizations: {
+                title: "Otex",
+                description: "Deposit funds",
+                logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+            },
+        });
+    }
+
+
+    var msg = document.getElementById('depo_msg')
+
+
+    document.getElementById('depoForm').addEventListener('submit', function(e) {
+        e.preventDefault()
+        msg.innerHTML = ""
+        if (document.getElementById('depo_amount_in_usd').value > 1000) {
+            msg.innerHTML = "Max Deposit exceeded"
+        } else if (document.getElementById('depo_amount_in_usd').value < 5) {
+            msg.innerHTML = "Min Deposit Not exceeded"
+        } else {
+            makePayment()
+        }
+
+    })
+</script>
+
+
+{% endblock script %}

@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr">
+
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="A Binary options trading platform">
+    <meta name="keywords" content="Invest, Binary Options, Trade, Forex, MT5, Broker">
+    <meta name="author" content="sammy">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#e9e8f0" />
+    <!-- Site Properties -->
+    <title>{% block title %} {% endblock title %} - OTEX</title>
+    <!-- Critical preload -->
+
+    <link rel="preload" href="{% static '/js/vendors/uikit.min.js' %}" as="script">
+    <link rel="preload" href="{% static '/css/vendors/uikit.min.css' %}" as="style">
+    <link rel="preload" href="{% static '/css/vendors/fontawesome/css/all.min.css' %}" as="style">
+    <!-- Font preload -->
+    <link rel="preload" href="{% static '/fonts/lato-v16-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static '/fonts/lato-v16-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static '/fonts/montserrat-v14-latin-600.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <!-- Favicon and apple icon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/vendors/uikit.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/vendors/fontawesome/css/all.min.css' %}" as="style">
+    <link rel="stylesheet" href="{% static '/css/vendors/line-awesome/css/line-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/dashboard.css' %}"> {% block style %} {% endblock style %}
+</head>
+
+<body>
+    {% if messages %} {% for msg in messages %}
+    <div class="notify" id="nitifym">
+        <div class="notify-icon-box">
+            <span class="fas {% if msg.tags == 'warning' %} fa-flag {% elif msg.tags == 'success' %} fa-check {% else %} fa-exclamation-circle {% endif %}"></span>
+        </div>
+
+        <div class="notify-body-box">
+            <h2 class="notify-title">
+                {{msg.tags.capitalize}}
+            </h2>
+            <p class="notify-body">{{ msg }}</p>
+        </div>
+    </div>
+    {% endfor %} {% else %}
+
+    <div class="notify">
+        <div class="notify-icon-box">
+            <span class="fas fa-check"></span>
+        </div>
+
+        <div class="notify-body-box">
+            <h2 class="notify-title">
+
+            </h2>
+            <p class="notify-body"></p>
+        </div>
+    </div>
+
+    {% endif %}
+    <!-- preloader begin -->
+    <div class="in-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- preloader end -->
+
+
+    <header>
+
+
+        <nav class="uk-navbar-container">
+            <div class="top-bari uk-section">
+                <div class="top-bar-date">
+                    <span id="date-bar">
+
+                </span>
+                </div>
+                <div class="top-bar-lang">
+                    <span class="fas fa-globe"></span>
+                    <div class="lang-select-con">
+                        <select class="  " id="language" onchange="changeLanguageByButtonClick()">
+                           
+                          
+                             <option value="nl">Dutch</option>
+                             <option value="en" selected>English</option>
+                         
+                             <option value="fr">French</option>
+                             
+                             <option value="de">German</option>
+                          
+                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="top-barii">
+
+                <a class="uk-logo bar-logo" href="index.html">
+                    <img class="in-offset-top-10" src="/static/images/in-lazy.svg" data-src="/static/images/in-logo-1.svg" alt="logo" width="130" height="36" data-uk-img>
+                </a>
+                <div class="bar-main-menu">
+                    <ul>
+                        <li><a href="{% url 'trade' %}">Trade</a></li>
+                        <li><a href="{% url 'profit-table' %}">Profit table</a></li>
+                        <li><a href="{% url 'cashier' %}">Cashier</a></li>
+                        <li><a href="{% url 'transactions' %}">Transactions</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                        <li><a href="{% url 'settings' %}">Security</a></li>
+
+                    </ul>
+                </div>
+                <div class="account-menu">
+                    <ul>
+                        <li><a href="{% url 'sign-out' %}">Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+
+
+    </header>
+
+
+
+    {% block breadcrumb %}{% endblock breadcrumb %}
+    <main>
+
+        {% block content %} {% endblock content %}
+    </main>
+    <div class="mb-3"></div>
+
+
+
+
+
+    <div id="mobile-nav">
+        <ul>
+            <li>
+                <a href="/profit-table/">
+                    <i class=" fas fa-coins"></i>
+                    <p>Profit</p>
+                </a>
+            </li>
+            <li>
+                <a href="/trade">
+                    <i class="la la-exchange"></i>
+                    <p>Trading</p>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="togglemn">
+                    <i class="fas fa-align-justify"></i>
+                    <p>More</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+    <div id="mobile-nav-menu" class="mobile-nav-menu">
+        <ul>
+            <li><a href="{% url 'cashier' %}">Cashier</a></li>
+            <li><a href="{% url 'transactions' %}">Transactions</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'settings' %}">security</a></li>
+            <li><a href="{% url 'sign-out' %}">Logout</a></li>
+        </ul>
+    </div>
+
+
+
+
+    <div class="footer">
+        <p>Copywright@Otex.com
+            <script>
+                document.write(Date.toString())
+            </script>
+        </p>
+    </div>
+
+
+    <!-- Javascript -->
+    <script src="{% static '/js/vendors/uikit.min.js' %}"></script>
+    <script src="{% static '/js/vendors/jquery/jquery.min.js' %}"></script>
+    <script src="/static/js/script.js"></script>
+    <script>
+        setInterval(function() {
+            var dt = new Date();
+            var x1 = dt.toUTCString();
+            document.getElementById("date-bar").innerHTML = x1;
+        }, 1000)
+
+
+        $('.togglemn').on('click', function(e) {
+            e.preventDefault()
+            $('#mobile-nav-menu').toggleClass('active')
+        })
+    </script>
+    {% if messages %}
+
+    <script>
+        showMNotify(limit = 9000)
+    </script>
+    {% endif %} {% block script %} {% endblock script %}
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Withdraw Funds {% endblock title %} {% block style %}
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<style>
+    .depo-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .depo-box form {
+        width: 300px;
+        margin: 50px 0px;
+    }
+</style>
+
+
+{% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Withdrawal Funds</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+    <div class="uk-container">
+
+
+        <div class="depo-box">
+            <form action="" method="post" name="withForm" id="withForm">{% csrf_token %}
+                <p>Enter the amount you want to withdwral, Current Balance : ${{user.balance|floatformat:2 }}</p>
+
+
+                <div class="uk-margin-small uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text">Bank Name</label>
+                    <div class="uk-form-controls">
+                        <input type="text" class="uk-input" id="wbank" name="Wbank" value="" placeholder="Bank name" required>
+
+                    </div>
+                </div>
+
+
+                <div class="uk-margin-small uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text">Account No</label>
+                    <div class="uk-form-controls">
+                        <input type="number" class="uk-input" id="Waccno" name="Waccno" value="" placeholder="Account No" required>
+
+                    </div>
+                </div>
+
+
+                <div class="uk-margin-small uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text">Account Name</label>
+                    <div class="uk-form-controls">
+                        <input type="text" class="uk-input" id="Waccname" name="Waccname" value="" placeholder="Account Name" required>
+
+                    </div>
+                </div>
+
+
+                <div class="uk-margin-small uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text">Amount</label>
+                    <div class="uk-form-controls">
+                        <input type="number" class="uk-input" id="Wamount" name="Wamount" value="" placeholder="Amount in USD" required>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="uk-margin-small uk-width-1-1">
+                    <button class="uk-button uk-width-1-1 uk-button-primary uk-border-rounded uk-float-left" type="submit">Done</button>
+                </div>
+                <br>
+
+
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %} {% block script %}
+<script>
+</script>
+
+
+{% endblock script %}

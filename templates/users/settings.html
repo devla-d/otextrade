@@ -1,0 +1,72 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Security {% endblock title %} {% block style %}
+<style>
+    main p,
+    main li {
+        color: #000000;
+        font-size: 18px;
+    }
+    
+    main ol {
+        /* margin: 0; */
+        padding: 11px;
+    }
+    
+    @media (max-width:789px) {
+        .uk-section.sec {
+            padding-top: 135px;
+        }
+    }
+</style>
+
+{% endblock style %} {% block breadcrumb %}
+
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Settings</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+
+{% endblock breadcrumb %} {% block content %}
+
+
+<div class="uk-section sec">
+
+    <div class="uk-container">
+        <div class="settings-box">
+            <div class="settings-item">
+                <img src="/static/images/account_password.svg" alt="">
+                <h3><a href="/password-reset/">Account Password</a> </h3>
+                <p>Change your Binary password .</p>
+            </div>
+
+            <div class="settings-item">
+                <img src="/static/images/iphistory.svg" alt="">
+                <h3> <a href="{% url 'login-history' %}">Login History</a> </h3>
+                <p>View your login history .</p>
+            </div>
+
+
+
+            <div class="settings-item">
+                <img src="/static/images/limits.svg" alt="">
+                <h3> <a href="{% url 'acc-limit' %}">Limit</a> </h3>
+                <p>View your trading and withdrawal limits..</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

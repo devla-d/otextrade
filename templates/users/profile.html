@@ -1,0 +1,46 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Profile {% endblock title %} {% block breadcrumb %}
+
+
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Profile</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+
+    <div class="uk-container">
+        <div>
+            <form action="" method="post" class="uk-form" style="margin-bottom: 86px;">
+                {% csrf_token %} {% for field in form %}
+                <div class="uk-margin-small  uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text">{{field.label}}</label>
+                    <div class="uk-form-controls">
+                        {{field}}
+                        <span class="uk-form-msg uk-text-danger" id="id_phone_msg"></span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="uk-margin-small uk-width-1-1">
+                    <button class="uk-button uk-width-1-1 uk-button-primary uk-border-rounded uk-float-left" type="submit" name="submit">Update</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="mb-3"></div> {% endblock content %}

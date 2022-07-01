@@ -1,0 +1,87 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Deposit with card {% endblock title %} {% block style %}
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+
+<style>
+    .depo-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .depo-box form {
+        width: 300px;
+        margin: 50px 0px;
+    }
+</style>
+
+
+{% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Deposit</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+    <div class="uk-container">
+
+
+        <div class="depo-box">
+            <form action="" method="post" name="depoForm" id="depoForm">{% csrf_token %}
+                <p>Enter the amount you want to deposit</p>
+
+
+
+                <input type="hidden" name="amount_in_usd" id="depo_amount_in_usd">
+                <input type="hidden" id="user_l_currency" name="local_currency" value="{{user.local_currency}}">
+
+
+
+                <div class="uk-margin-small uk-width-1-1 uk-inline">
+                    <label class="uk-form-label" for="form-stacked-text"></label>
+                    <div class="uk-form-controls">
+                        <input type="number" class="uk-input" id="amount" value="" placeholder="Amount in {{user.local_currency}}" required>
+
+                        <span class="uk-margin-small uk-text-success">Amount in usd $<span id="amount_in_usd"></span></span>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="uk-margin-small uk-width-1-1">
+                    <button class="uk-button uk-width-1-1 uk-button-primary uk-border-rounded uk-float-left" type="submit">Done</button>
+                </div>
+                <br>
+                <p id="depo_msg"> </p>
+
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %} {% block script %}
+<script src="/static/js/deposit.js"></script>
+<script>
+</script>
+
+
+{% endblock script %}

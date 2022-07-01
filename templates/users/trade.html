@@ -1,0 +1,554 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Trade {% endblock title %} {% block style %}
+<style>
+    .uk-dropdown-nav>li>a {
+        color: #222;
+    }
+    
+    .swicht-acc {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .swicht-acc ul {
+        background-color: #a09e9e;
+        margin-bottom: -30px;
+        padding: 0;
+        border-radius: 15px;
+    }
+    
+    .swicht-acc ul li {
+        display: inline-block;
+        padding: 5.8px;
+    }
+    
+    .swicht-acc ul li.active {
+        background-color: #fd6a4f;
+    }
+    
+    .swicht-acc ul li.active a {
+        color: #fff !important;
+    }
+    
+    .swicht-acc ul li a {
+        color: #32322f;
+    }
+    
+    .uk-secti {
+        padding: 19px 0px;
+    }
+</style>
+
+{% endblock style %} {% block content %}
+
+<div class="uk-secti">
+    <div class="container">
+        <div class="swicht-acc">
+            <!-- <h4>Swicht Account</h4> -->
+            <ul>
+                <li class="{% if mode == 'demo' %}active{% endif %} demo"><a href="{% url 'swith_account' tomode='demo'  %}">Demo Account</a></li>
+                <li class="{% if mode == 'real' %}active{% endif %} real"><a href="{% url 'swith_account'  tomode='real' %}">Real Account</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!-- section content begin -->
+<div class="uk-section">
+    <div class="uk-container">
+        <h6>Welcome Sammy</h6>
+        <div class="balance-box uk-background-contain" data-src="/static/images/in-profit-decor-3.svg" data-uk-img>
+            <h3 id="bal-title">Avialable Balance</h3>
+            {% if mode == 'demo' %}
+            <a href="{% url 'resetdemobalace' %}" class="fund-acc">
+                <h5>Reset Balance <span class="fas fa-redo"></span></h5>
+            </a>
+            {% else %}
+            <a href="/cashier/" class="fund-acc">
+                <h5>fund Account <span class="fas fa-plus"></span></h5>
+            </a>
+            {% endif %}
+            <h1 id="bal">{% if mode == 'demo' %}${{user.demo_balance}}{% else %}${{user.balance|floatformat:2 }}{% endif %}</h1>
+            <ul class="account-info">
+                <li>
+                    <p>User Id</p>
+                    <h4>{{user.username}}</h4>
+                </li>
+                <li>
+                    <p>Account Type</p>
+                    <h4>{% if mode == 'demo' %}Demo{% else %}Real{% endif %}</h4>
+                </li>
+                <li>
+                    <p>Account Status</p>
+                    <h4>Active</h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- section content begin -->
+<div class="uk-section">
+    <div class="uk-container">
+        <div class="stake-section">
+            <h5 class="uk-text-center"><span class="uk-badge" id="live-price"></span></h5>
+            <div class="">
+
+
+
+
+                <div id="contract_container1">{% csrf_token %}
+
+
+                    <div>
+                        <div class="uk-inline">
+                            <div class="uk-button uk-button-default" type="button">
+                                <div>
+                                    <p style="margin: 0;">forex</p>
+                                    <h4 style="margin: 0;" id="symbol">AUD/JPY</h4>
+                                </div>
+                            </div>
+                            <div uk-dropdown="pos: bottom-justify">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-active"><a href="#">Major pairs</a></li>
+                                    <li><a onclick="(change_sym('AUD/JPY'))">AUD/JPY</a></li>
+                                    <li><a onclick="(change_sym('EUR/AUD'))">EUR/AUD</a></li>
+                                    <li><a onclick="(change_sym('EUR/CHF'))">EUR/CHF</a></li>
+                                    <li><a onclick="(change_sym('EUR/JPY'))">EUR/JPY</a></li>
+                                    <li><a onclick="(change_sym('GBP/AUD'))">
+                                        GBP/AUD</a></li>
+                                    <li><a onclick="(change_sym('GBP/USD'))"> 
+                                        GBP/USD</a></li>
+                                    <li><a onclick="(change_sym('USD/CHF'))">USD/CHF</a></li>
+                                    <li><a onclick="(change_sym('AUD/USD'))">AUD/USD</a></li>
+                                    <li><a onclick="(change_sym('EUR/CAD'))">
+                                        EUR/CAD</a></li>
+                                    <li><a onclick="(change_sym('EUR/GBP'))"> 
+                                        EUR/GBP</a></li>
+                                    <li><a onclick="(change_sym('EUR/USD'))">
+                                        EUR/USD</a></li>
+                                    <li><a onclick="(change_sym('GBP/JPY'))"> 
+                                        GBP/JPY
+                                       
+                                        </a></li>
+                                    <li><a onclick="(change_sym('USD/CAD'))"> 
+                                        USD/CAD</a></li>
+                                    <li><a onclick="(change_sym('USD/JPY'))">
+                                        USD/JPY</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="uk-inline uk-margin-left">
+
+                            <div class="uk-button uk-button-default" type="button">
+                                <div>
+                                    <p style="margin: 0;">Up/down</p>
+                                    <h4 style="margin: 0;" id="ty_pe_sub">Higher/Lower</h4>
+                                </div>
+                            </div>
+                            <div uk-dropdown="pos: bottom-justify">
+                                <ul class="uk-nav uk-dropdown-nav">
+
+                                    <li><a onclick="change_staketype('Higher/Lower')" class="ty_pe_sub_item">Higher/Lower</a></li>
+                                    <!-- <li><a href="#" onclick="change_staketype('Rise/Fall')" class="ty_pe_sub_item">Rise/Fall</a></li> -->
+                                    <li><a onclick="change_staketype('Touch/No Touch')" class="ty_pe_sub_item">Touch/No Touch</a></li>
+                                    <!-- <li><a href="#" onclick="change_staketype('End Between/End Outside')" class="ty_pe_sub_item">End Between/End Outside</a></li> -->
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stake-form-group">
+                        <h4 class="stake-form-label">Duration</h4>
+                        <input type="number" name="duration" id="duration" class="uk-input stake-input" value="1">
+                        <select name="time" name="duration_unit" class="uk-select stake-input" id="duration_unit">
+                            <option value="t">Ticks</option>
+                            <option value="m">minutes</option>
+                                    <option value="d">Days</option>
+                                    <option value="h">Hours</option>
+                                  
+                                </select>
+                    </div>
+
+                    <div class="stake-form-group">
+                        <h4 class="stake-form-label">Barrier</h4>
+                        <input type="number" id="barier" class="uk-input uk-form-success stake-input" readonly>
+
+                    </div>
+
+
+                    <div class="stake-form-group">
+                        <h4 class="stake-form-label">Stake</h4>
+                        <input type="number" id="stakeamount" name="stakeamount" class="uk-input stake-input" value="10" min="10">
+                        <h4 class="stake-form-label">USD</h4>
+
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+                <div>
+                    <div class="contract_container2">
+                        <div class="contract-content">
+
+
+                            <div class="amount-wrapper">
+                                <div class="payout-wrapper">
+
+                                    <h3>Stake - <span class="-stake-amount"></span></h3>
+
+                                    <h3>Payout - <span class="-payout"></span></h3>
+
+                                </div>
+                                <div class="uk-margin-small uk-width-1-1">
+                                    <button id="stake_higher" class="uk-button uk-width-1-1 uk-button-primary uk-border- uk-float-left" type="button">Higher</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="contract-content-footer">
+                            <p>Net profit: <span class="_net_profit">9.10</span>USD | return <span class="_return_perc">19.5</span>%</p>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="contract_container2">
+                        <div class="contract-content">
+
+
+                            <div class="amount-wrapper">
+                                <div class="payout-wrapper">
+                                    <h3>Stake - <span class="-stake-amount"></span></h3>
+
+                                    <h3>Payout - <span class="-payout"></span></h3>
+
+                                </div>
+                                <div class="uk-margin-small uk-width-1-1">
+                                    <button id="stake_lower" class="uk-button uk-width-1-1 uk-button-primary uk-border- uk-float-left" type="button">Lower</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="contract-content-footer">
+                            <p>Net profit: <span class="_net_profit">9.10</span>USD | return <span class="_return_perc">19.5</span>%</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- section content begin -->
+<div class="uk-section">
+    <div class="uk-container">
+        <div class="explanation-sect">
+            <div class="uk-margin-medium-top">
+                <ul class="uk-tab uk-flex-center" uk-tab data-uk-tab="{connect:'#my-id'}">
+                    <li class="uk-active"><a href="#" class="explan-title">Explanation</a></li>
+                    <!-- <li><a href="">Tab 2</a></li> -->
+
+                </ul>
+
+
+                <ul id="my-id" class="uk-switcher uk-margin">
+                    <li>
+                        <div>
+                            <h4 class="explan-tit">
+                                Winning the contract
+
+                            </h4>
+                            <p>If you select "Higher", you win the payout if the <strong>exit spot</strong> is strictly higher than the <strong>entry spot</strong>.</p>
+                            <p>If you select "Lower", you win the payout if the <strong>exit spot</strong> is strictly lower than the <strong>entry spot</strong>.</p>
+                            <p>If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Higher". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Lower".</p>
+
+
+                        </div>
+                        <div id="explanation_image" class="">
+
+                        </div>
+
+                        <div id="explanation_infos" class="">
+                            <h3>Entry spot</h3>
+                            <p>The <strong>start time</strong> is when the contract is processed by our servers and the <strong>entry spot</strong> is the <strong>next tick</strong> thereafter.<br>If you select a <strong>start time</strong> in the future,
+                                the <strong>start time</strong> is that which is selected and the <strong>entry spot</strong> is the price in effect at that time.</p>
+
+
+
+                            <h3>Exit spot</h3>
+
+
+                            <p>The <strong>exit spot</strong> is the latest tick at or before the <strong>end time</strong>.<br>If you select a <strong>start time</strong> of "Now", the <strong>end time</strong> is the selected number of minutes/hours after
+                                the <strong>start time</strong> (if less than one day in duration), or at the end of the trading day (if one day or more in duration).<br>If you select a specific <strong>end time</strong>, the <strong>end time</strong>                                is the selected time.</p>
+
+
+                        </div>
+                        <div id="explanation_note" class="gr-padding-20 gr-child">
+
+                            <div id="note_risefall" class="">
+                                <p class="hint"><strong>Note: </strong>Rise/Fall contracts will be refunded if: <br>• There are less than 2 ticks between the start and end times <br>• The contract doesn't end within 5 minutes (for tick duration contracts)</p>
+                            </div>
+
+                        </div>
+
+                    </li>
+                    <!-- <li>Content 2</li> -->
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %} {% block script %}
+
+<script>
+    var ws = new WebSocket('wss://blue.binaryws.com/websockets/v3?l=en&app_id=1&brand=binary');
+
+    ws.onopen = function(evt) {
+        ws.send(JSON.stringify({
+            ticks: 'frxAUDJPY'
+        }));
+    };
+
+
+
+    ws.onmessage = function(msg) {
+        var data = JSON.parse(msg.data);
+        barier.value = data.tick.quote
+        document.getElementById('live-price').innerHTML = data.tick.quote
+
+
+
+        //console.log(data);
+    };
+
+
+    var symbol = document.getElementById('symbol')
+    var ty_pe_sub = document.getElementById('ty_pe_sub')
+    var ty_pe_sub_item = document.getElementById('ty_pe_sub_item')
+    var duration = document.getElementById('duration')
+    var duration_unit = document.getElementById('duration_unit')
+    var barier = document.getElementById('barier')
+
+    var stakeamount = document.getElementById('stakeamount')
+
+    var h_stake_amount = document.getElementsByClassName('-stake-amount')
+    var h_payout = document.getElementsByClassName('-payout')
+
+    var h_net_profit = document.getElementsByClassName('_net_profit')
+    var h_return_perc = document.getElementsByClassName('_return_perc')
+
+
+    var stake_lower = document.getElementById('stake_lower')
+    var stake_higher = document.getElementById('stake_higher')
+
+    var payout_pec = 20 / 100
+
+    var payout = payout_pec * stakeamount.value
+
+    var payout_total = parseInt(payout) + parseInt(stakeamount.value)
+
+
+
+
+    /* select forex */
+    function change_sym(sym) {
+
+        symbol.textContent = sym
+        res = sym.replace('/', '')
+        new_sym = "frx" + res
+
+        console.log(new_sym)
+        ws.send(JSON.stringify({
+            ticks: new_sym
+        }));
+
+    }
+
+    /* stake type */
+    function change_staketype(stype) {
+        ty_pe_sub.textContent = stype
+        if (stype == "Higher/Lower") {
+            stake_lower.innerHTML = 'Lower'
+            stake_higher.innerHTML = "Higher"
+        }
+        if (stype == "Rise/Fall'") {
+            stake_lower.innerHTML = 'Fall'
+            stake_higher.innerHTML = "Rise"
+        }
+        if (stype == "Touch/No Touch") {
+            stake_lower.innerHTML = 'Touch'
+            stake_higher.innerHTML = "No Touch"
+        }
+        // if (stype == "End Between/End Outside") {
+        //     stake_lower.innerText = 'End Outside'
+        //     stake_higher.innerText = "End between"
+        // }
+        console.log(stype)
+
+
+    }
+
+    duration.addEventListener('keyup', function() {
+        if (duration_unit.value === 't') {
+            if (duration.value > 5) {
+                showNotify('Invalid Input', "Tick can\'t be grater than 5", 2000)
+                stake_lower.setAttribute('disabled', 'disabled')
+                stake_higher.setAttribute('disabled', 'disabled')
+            } else {
+                stake_lower.removeAttribute('disabled')
+                stake_higher.removeAttribute('disabled')
+            }
+            if (duration.value < 1) {
+                showNotify('Invalid Input', "Tick can\'t be less than 1", 2000)
+                stake_lower.setAttribute('disabled', 'disabled')
+                stake_higher.setAttribute('disabled', 'disabled')
+            } else {
+                stake_lower.removeAttribute('disabled')
+                stake_higher.removeAttribute('disabled')
+            }
+        }
+
+
+
+    })
+    stakeamount.addEventListener('keyup', function() {
+        console.log(payout_total)
+        if (stakeamount.value < 5) {
+            showNotify('Invalid Input', "Stake can\'t be less than 5", 2000)
+            stake_lower.setAttribute('disabled', 'disabled')
+            stake_higher.setAttribute('disabled', 'disabled')
+        } else {
+            stake_lower.removeAttribute('disabled')
+            stake_higher.removeAttribute('disabled')
+
+            payout = payout_pec * parseInt(stakeamount.value)
+            payout_total = payout + parseInt(stakeamount.value)
+        }
+
+        if (stakeamount.value > 50) {
+            showNotify('Invalid Input', "Stake can\'t be greater than 50", 2000)
+            stake_lower.setAttribute('disabled', 'disabled')
+            stake_higher.setAttribute('disabled', 'disabled')
+        } else {
+            stake_lower.removeAttribute('disabled')
+            stake_higher.removeAttribute('disabled')
+
+            payout = payout_pec * parseInt(stakeamount.value)
+            payout_total = payout + parseInt(stakeamount.value)
+        }
+
+    })
+
+
+
+    stake_lower.addEventListener('click', function() {
+        stake_lower.setAttribute('disabled', 'disabled')
+        stake_higher.setAttribute('disabled', 'disabled')
+
+
+        $.ajax({
+            type: "POST",
+            url: "/create-contract/",
+            data: {
+                "symbol": symbol.textContent,
+                "stake_type": ty_pe_sub.textContent,
+                "duration": duration.value,
+                "duration_unit": duration_unit.value,
+                "barier": barier.value,
+                "stakeamount": stakeamount.value,
+                "payout": payout,
+                "payout_total": payout_total,
+                "ty_pe": stake_lower.textContent,
+                // csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken').values,
+            },
+            success: function(data) {
+                if (data.err) {
+                    alert(data.err)
+                } else {
+                    window.location.href = `/trade/${data.tr_ref}`
+                }
+
+            }
+
+        })
+    })
+
+
+
+
+
+
+
+
+
+    stake_higher.addEventListener('click', function() {
+        stake_lower.setAttribute('disabled', 'disabled')
+        stake_higher.setAttribute('disabled', 'disabled')
+
+
+        $.ajax({
+            type: "POST",
+            url: "/create-contract/",
+            data: {
+                "symbol": symbol.textContent,
+                "stake_type": ty_pe_sub.textContent,
+                "duration": duration.value,
+                "duration_unit": duration_unit.value,
+                "barier": barier.value,
+                "stakeamount": stakeamount.value,
+                "payout": payout,
+                "payout_total": payout_total,
+                "ty_pe": stake_higher.textContent,
+                // csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken').value,
+            },
+            success: function(data) {
+                if (data.err) {
+                    alert(data.err)
+                } else {
+                    window.location.href = `/trade/${data.tr_ref}`
+                }
+            }
+
+        })
+    })
+</script>
+
+
+{% endblock script %}

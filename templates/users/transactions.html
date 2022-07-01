@@ -1,0 +1,68 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Transactions {% endblock title %} {% block style %} {% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Transactions</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+    <div class="uk-container">
+        <div class="uk-overflow-auto">
+            <table id="profittable" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Ref</th>
+                        <th>Mode</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+
+                </thead>
+                <tbody>
+                    {% if transactions %} {% for obj in transactions %}
+                    <tr>
+                        <td>{{obj.date}}</td>
+                        <td>{{obj.tr_ref}}</td>
+                        <td>{{obj.tr_type}}</td>
+                        <td>${{obj.amount}}</td>
+                        <td>
+                            {% if obj.status == "SUCCESS" %}
+                            <span class="uk-badge ">{{obj.status}}</span> {% else %}
+                            <span class="uk-badge uk-text-warning">{{obj.status}}</span> {% endif %}
+
+
+                        </td>
+
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <h5 align="center" class="uk-text-center">No Transactions record</h5>
+
+
+                    </tr>
+                    {% endif %}
+
+
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %} {% block script %} {% endblock script %}

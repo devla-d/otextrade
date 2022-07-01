@@ -1,0 +1,130 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Agents {% endblock title %} {% block breadcrumb %}
+
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/cashier">Cashier</a></li>
+                    <li><span>Agents</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+
+{% endblock breadcrumb %} {% block content %}
+<div class="uk-section">
+
+    <div class="uk-container">
+
+        <h4>How to use a payment agent?</h4>
+        <p>You can use an authorized payment agent to process deposits and withdrawals for payment methods or local currencies not supported by Binary.com. It's easy to do.
+
+        </p>
+        <ol style="">
+            <li>Check out the payment methods accepted by the payment agents in the list below.</li>
+            <li>Choose the payment method you'd like to use.</li>
+            <li>Contact the payment agent directly for more information on how to transfer money to them.</li>
+            <li>Send your funds to the payment agent. The deposited funds, less the agent's commission, will show up in your account.</li>
+        </ol>
+
+
+
+
+
+
+
+
+
+
+        <div class="faq-block">
+
+            <div class="accordion accordion-faq">
+                {% for obj in agents %}
+                <div class="accordion-item">
+                    <div class="accordion-title">{{obj.name}}<span class="accordion-title__arrow"><i class="fa fa-angle-down"></i></span></div>
+                    <div class="question-block">
+                        <table class="uk-table uk-table-divider">
+
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td class="text-center"><span id="with-user">{{obj.name}}</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Currency</td>
+                                    <td class="text-center text-danger"><span id="with-amount">USD</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Min / Max withdrawal</td>
+                                    <td class="text-center  text-warning  "><span id="with-method">5 / 2000</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Commission on deposits</td>
+                                    <td class="text-center"><span>0%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Commission on withdrawals</td>
+                                    <td class="text-center"><span>0%</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>Website</td>
+                                    <td class="text-center"><a href="{{obj.website}}">{{obj.website}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Email</td>
+                                            <td class="text-center"><a href="mailto:{{obj.email}}" target="_blank">{{obj.email}}</span></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Tel</td>
+                                            <td class="text-center"><a href="tel:{{obj.tel}}">{{obj.tel}}</a></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>Further information</td>
+                                    <td class="text-center">
+                                        <p>{{obj.further_information}}.</p>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}{% block script %}
+
+<script>
+    //$('.accordion >.accordion-item:eq(0) .accordion-title').addClass('active').next().slideDown().parent().addClass('active');
+    $('.accordion .accordion-title').click(function(j) {
+        var dropDown = $(this).closest('.accordion-item').find('.question-block');
+        console.log(dropDown)
+        $(this).closest('.accordion').find('.question-block').not(dropDown).slideUp();
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active').parent().removeClass('active');
+        } else {
+            $(this).closest('.accordion').find('.accordion-title.active').removeClass('active').parent().removeClass('active');
+            $(this).addClass('active').parent().addClass('active');
+        }
+        dropDown.stop(false, true).slideToggle();
+        j.preventDefault();
+    });
+</script>
+{% endblock script %}

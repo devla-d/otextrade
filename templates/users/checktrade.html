@@ -1,0 +1,279 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Contract {% endblock title %} {% block style %}
+<style>
+    .trade-dialog {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        justify-content: center;
+    }
+    
+    .dialog-body {
+        background-color: #ffffff;
+        width: 366px;
+    }
+    
+    .dialog-head {
+        display: flex;
+        background-color: #2a3052;
+        padding: 10px;
+        justify-content: center;
+        color: #fff;
+        height: 28px;
+    }
+    
+    .dialog-head span.fas.fa-times {
+        float: right;
+        margin: 5px 25px;
+    }
+</style>
+
+{% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Trade</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="trade-dialog">
+    <div class="dialog-body">
+        <div class="dialog-head">
+            <p>Contract Information</p>
+            <a href="/trade/"><span class="fas fa-times"></span></a>
+        </div>
+        <div class="dialog-body">
+            <div class="table-block">
+                <table class="uk-table uk-table-divider">
+
+                    <tbody>
+                        <tr>
+                            <td>Contract Type</td>
+                            <td class="text-center"><span id="symbol" data-symbol="{{contract.sysmbol}}">{{contract.ty_pe}}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Trans ID</td>
+                            <td class="text-center text-danger"><span id="tr_ref">{{contract.tr_ref}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Start Time</td>
+                            <td class="text-center  text-warning  "><span id="with-method">{{contract.date}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>End Time</td>
+                            <td class="text-center  text-warning  "><span id="with-method">{{contract.sell_date}}</span>
+                            </td>
+                        </tr>
+                        {% if contract.duration_unit == 't' %}
+                        <p style="display: none;" id="numtick" data-tick="{{contract.duration}}"></p>
+                        {% else %}
+                        <tr>
+                            <td>Remaining Time</td>
+                            <td class="text-center  text-warning  "><span id="contractRtime" data-endate="{{contract.sell_date|date:'M d, Y H:m:s'}}"></span>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Barrier</td>
+                            <td class="text-center"><span>{{contract.barrier}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Potential Payout</td>
+                            <td class="text-center"><span>${{contract.payout_total}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Price</td>
+                            <td class="text-center"><span>${{contract.stake}}</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Profit/Loss</td>
+                            <td class="text-center">
+                                <span class="{% if contract.status == 'loss' %}uk-text-danger{% elif contract.status == 'pending' %}uk-text-warning{% else %}uk-text-success{% endif %}">{{contract.status}}</span></td>
+                        </tr>
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %} {% block script %} {% if contract.status == 'pending' %} {% if contract.duration_unit == 't' %}
+<script>
+    var numtick = parseInt(document.getElementById('numtick').getAttribute('data-tick'))
+    var tick = 0;
+    var barier;
+    var sym = document.getElementById('symbol')
+    var symbol = sym.getAttribute('data-symbol')
+    res = symbol.replace('/', '')
+    new_sym = "frx" + res
+    console.log(numtick)
+    var ws = new WebSocket('wss://blue.binaryws.com/websockets/v3?l=en&app_id=1&brand=binary');
+
+    ws.onopen = function(evt) {
+        ws.send(JSON.stringify({
+            ticks: new_sym
+        }));
+    };
+
+
+
+    ws.onmessage = function(msg) {
+        var data = JSON.parse(msg.data);
+        barier = data.tick.quote
+        if (tick === numtick) {
+            ws.close()
+            processtickdata(barier)
+        } else {
+            tick++
+            console.log(tick, 'ticking')
+        }
+
+    };
+
+
+
+    function processtickdata(b) {
+        console.log(b)
+
+
+        $.ajax({
+            type: "POST",
+            url: `/trade/${ document.getElementById('tr_ref').textContent}/`,
+            data: {
+                "barier": barier,
+                'tr_ref': document.getElementById('tr_ref').textContent
+
+            },
+            success: function(data) {
+
+                alert(data.msg)
+                window.location.reload()
+
+            }
+
+        })
+
+
+    }
+</script>
+{% else %}
+<script>
+    var tick = 0;
+    var barier;
+    var remaintime = document.getElementById('contractRtime')
+    var end_date = remaintime.getAttribute('data-endate')
+    var sym = document.getElementById('symbol')
+    var symbol = sym.getAttribute('data-symbol')
+    res = symbol.replace('/', '')
+    new_sym = "frx" + res
+    const eventDate = Date.parse(end_date);
+
+    var ws = new WebSocket('wss://blue.binaryws.com/websockets/v3?l=en&app_id=1&brand=binary');
+
+    ws.onopen = function(evt) {
+        ws.send(JSON.stringify({
+            ticks: new_sym
+        }));
+    };
+
+
+
+    ws.onmessage = function(msg) {
+        var data = JSON.parse(msg.data);
+        barier = data.tick.quote
+        tick++
+
+
+    };
+
+
+
+
+    x = setInterval(() => {
+
+        var now = new Date().getTime();
+        var distance = eventDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        remaintime.innerHTML = `${days}:${hours}:${minutes}:${seconds}`;
+
+
+
+
+        if (distance < 0) {
+            remaintime.innerHTML = `${0}:${0}:${0}:${0}`;
+            close_in()
+
+
+        }
+    }, 1000);
+
+    function close_in() {
+
+        clearInterval(x)
+        if (tick >= 1) {
+            processtickdata(barier)
+        } else {
+            setTimeout(function() {
+                processtickdata(barier)
+            }, 5000)
+        }
+
+
+
+    }
+
+
+
+    function processtickdata(b) {
+        console.log(b)
+
+
+        $.ajax({
+            type: "POST",
+            url: `/trade/${ document.getElementById('tr_ref').textContent}/`,
+            data: {
+                "barier": b,
+                'tr_ref': document.getElementById('tr_ref').textContent
+
+            },
+            success: function(data) {
+
+                alert(data.msg)
+                window.location.reload()
+
+            }
+
+        })
+
+
+    }
+</script>
+{% endif %} {% endif %} {% endblock script %}

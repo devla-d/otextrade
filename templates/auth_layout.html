@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr">
+
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="A Binary options trading platform">
+    <meta name="keywords" content="Invest, Binary Options, Trade, Forex, MT5, Broker">
+    <meta name="author" content="sammy">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#e9e8f0" />
+    <!-- Site Properties -->
+    <title>{% block title %} {% endblock title %} - OTEX</title>
+    <!-- Critical preload -->
+    <link rel="preload" href="{% static '/js/vendors/uikit.min.js' %}" as="script">
+    <link rel="preload" href="{% static '/css/vendors/uikit.min.css' %}" as="style">
+    <link rel="preload" href="{% static '/css/style.css' %}" as="style">
+    <!-- Icon preload -->
+    <link rel="preload" href="{% static '/fonts/fa-brands-400.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static '/fonts/fa-solid-900.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <!-- Font preload -->
+    <link rel="preload" href="{% static '/fonts/lato-v16-latin-700.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static '/fonts/lato-v16-latin-regular.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static '/fonts/montserrat-v14-latin-600.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <!-- Favicon and apple icon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static '/css/vendors/uikit.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="/static/js/vendors/jquery-ui-1.13.1/jquery-ui.css">
+
+    <link rel="stylesheet" href="/static/css/vendors/select2/dist/css/select2.min.css"> {% block style %} {% endblock style %}
+</head>
+
+<body>
+    <!-- preloader begin -->
+    <div class="in-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- preloader end -->
+    <main>
+        {% if messages %} {% for msg in messages %}
+        <div class="notify" id="nitifym">
+            <div class="notify-icon-box">
+                <span class="fas {% if msg.tags == 'warning' %} fa-flag {% elif msg.tags == 'success' %} fa-check {% else %} fa-exclamation-circle {% endif %}"></span>
+            </div>
+
+            <div class="notify-body-box">
+                <h2 class="notify-title">
+                    {{msg.tags.capitalize}}
+                </h2>
+                <p class="notify-body">{{ msg }}</p>
+            </div>
+        </div>
+        {% endfor %} {% else %}
+
+        <div class="notify">
+            <div class="notify-icon-box">
+                <span class="fas fa-check"></span>
+            </div>
+
+            <div class="notify-body-box">
+                <h2 class="notify-title">
+
+                </h2>
+                <p class="notify-body"></p>
+            </div>
+        </div>
+
+        {% endif %} {% block content %} {% endblock content %}
+
+
+
+
+    </main>
+
+
+
+
+
+
+
+    <!-- Javascript -->
+    <script src="{% static '/js/vendors/uikit.min.js' %}"></script>
+    <script src="{% static '/js/vendors/indonez.min.js' %}"></script>
+    <script src="{% static '/js/config-theme.js' %}"></script>
+    <script src="/static/js/vendors/jquery/jquery.min.js"></script>
+    <script src="/static/css/vendors/select2/dist/js/select2.min.js"></script>
+    <script src="/static/js/vendors/jquery-ui-1.13.1/jquery-ui.js"></script>
+
+
+    {% if messages %}
+
+    <script>
+        showMNotify(limit = 6000)
+    </script>
+    {% endif %} {% block script %} {% endblock script %}
+</body>
+
+</html>

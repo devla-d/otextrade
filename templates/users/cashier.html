@@ -1,0 +1,109 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} Cashier {% endblock title %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Cashier</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+
+
+{% endblock breadcrumb %} {% block content %}
+
+
+<div class="uk-section">
+    <div class="uk-container">
+
+        <div class="cashier-box">
+            <div class="cashier-box-title">
+                <h3>Deposit With Card</h3>
+            </div>
+            <div class="cashier-box-content">
+                <div class="cashier-box-image">
+                    <img src="/static/images/in-lazy.svg" data-src="/static/images/payment-methods.svg" alt="payment method" data-uk-img>
+
+                </div>
+                <div class="cashier-box-info">
+                    <p>We accept the following card: </p>
+                    <ul>
+                        <li><img src="/static/images/visa.png" alt=""></li>
+                        <li><img src="/static/images/mastercard.png" alt=""></li>
+
+
+                    </ul>
+                </div>
+                <div class="cashier-box-btn">
+                    <a href="{% url 'withdrawal' %}" class="uk-button uk-button-default uk-width-1-1 uk-button-small uk-margin-small-bottom">Withdraw</a>
+                    <a href="{% url 'card-deposit' %}" class="uk-button uk-button-primary uk-width-1-1 uk-button-small uk-margin-small-bottom">Deposit</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mtb-2"></div>
+        <!-- <div class="cashier-box">
+            <div class="cashier-box-title">
+                <h3>Deposit cryptocurrencies</h3>
+            </div>
+            <div class="cashier-box-content">
+                <div class="cashier-box-image">
+                    <img src="/static/images/in-lazy.svg" data-src="/static/images/cryptocurrencies.svg" alt="payment agent" data-uk-img>
+
+                </div>
+                <div class="cashier-box-info">
+                    <p>We accept the following cryptocurrencies: </p>
+                    <ul>
+                        <li><img src="/static/images/bitcoin-icon.svg" alt=""></li>
+                        <li><img src="/static/images/ethereum-icon.svg" alt=""></li>
+                        <li><img src="/static/images/litecoin-icon.svg" alt=""></li>
+                        <li><img src="/static/images/usdc-icon.svg" alt=""></li>
+                        <li><img src="/static/images/usdt-tether-icon.svg" alt=""></li>
+
+                    </ul>
+                </div>
+                <div class="cashier-box-btn">
+                    <a class="uk-button uk-button-default uk-width-1-1 uk-button-small uk-margin-small-bottom">Withdraw</a>
+                    <a class="uk-button uk-button-primary uk-width-1-1 uk-button-small uk-margin-small-bottom">Deposit</a>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div class="mtb-2"></div>
+
+        <div class="cashier-box">
+            <div class="cashier-box-title">
+                <h3>Deposit via payment agents</h3>
+            </div>
+            <div class="cashier-box-content">
+                <div class="cashier-box-image">
+                    <img src="/static/images/in-lazy.svg" data-src="/static/images/payment-agents.svg" alt="payment agent" data-uk-img>
+
+                </div>
+                <div class="cashier-box-info">
+                    <p>Deposit in your local currency via an authorised, independent payment agent in your country. </p>
+                    <ul>
+
+                        <li>
+                            <p class="uk-text-warning"><span class="fas fa-exclamation"></span> Withdrawal via payment agent is available only if you deposit exclusively via payment agent</p>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="cashier-box-btn">
+                    <a href="/agents" class="uk-button uk-button-default uk-width-1-1 uk-button-small uk-margin-small-bottom">Withdraw</a>
+                    <a href="/agents" class="uk-button uk-button-primary uk-width-1-1 uk-button-small uk-margin-small-bottom">Deposit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

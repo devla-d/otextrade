@@ -1,0 +1,83 @@
+{% extends "management_layout.html" %} {% block breadcrumb %}
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 d-flex align-items-center">
+                    <li class="breadcrumb-item"><a href="/management/" class="link"><i class="mdi mdi-home-outline fs-4"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Deposits</li>
+                </ol>
+            </nav>
+            <h1 class="mb-0 fw-bold">Deposits</h1>
+        </div>
+        <div class="col-6">
+            <div class="text-end upgrade-btn">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+
+{% endblock breadcrumb %} {% block content %}
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<div class="row mb-3">
+
+    <div class="card">
+        <div class="card-body">
+            <!-- <h4 class="card-title">Striped rows</h4>
+            <h6 class="card-subtitle">Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.</h6> -->
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Ref</th>
+                        <th scope="col">Amount</th>
+
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in transactions %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{obj.user.first_name}} {{obj.user.last_name}}</td>
+                        <td>{{obj.date|date:"Y-M-d g:IA"}}</td>
+                        <td>{{obj.tr_ref}}</td>
+                        <td>${{obj.amount}}</td>
+
+                        <td>
+                            {% if obj.status == "SUCCESS" %}
+                            <span class="text-success">{{obj.status}}</span> {% else %}
+                            <span class="text-warning">{{obj.status}}</span> {% endif %}
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+
+{% endblock content %}

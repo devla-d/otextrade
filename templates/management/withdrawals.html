@@ -1,0 +1,103 @@
+{% extends "management_layout.html" %} {% block breadcrumb %}
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 d-flex align-items-center">
+                    <li class="breadcrumb-item"><a href="/management/" class="link"><i class="mdi mdi-home-outline fs-4"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">withdrawals</li>
+                </ol>
+            </nav>
+            <h1 class="mb-0 fw-bold">withdrawals</h1>
+        </div>
+        <div class="col-6">
+            <div class="text-end upgrade-btn">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+
+{% endblock breadcrumb %} {% block content %}
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<div class="row mb-3">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Ref</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Acc No</th>
+                            <th scope="col">Acc Name</th>
+                            <th scope="col">Bank</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in transactions %}
+                        <tr>
+
+                            <td>{{obj.user.first_name}} {{obj.user.last_name}}</td>
+                            <td>{{obj.date|date:"Y-M-d g:IA"}}</td>
+                            <td>{{obj.tr_ref}}</td>
+                            <td>{{obj.amount}}</td>
+
+                            <td>{{obj.bank_detail.acc_number}}</td>
+                            <td>{{obj.bank_detail.acc_name}}</td>
+
+                            <td>{{obj.bank_detail.bank_type}}</td>
+                            <td> {% if obj.status == "SUCCESS" %}
+                                <span class="text-success">{{obj.status}}</span> {% elif obj.status == "DECLINED" %}
+                                <span class="text-danger">{{obj.status}}</span> {% else %}
+                                <span class="text-warning">{{obj.status}}</span> {% endif %}
+                            </td>
+                            <td>{% if obj.status == "SUCCESS" %}
+                                <button class="btn btn-primary btn-sm " disabled>action</button> {% else %}
+                                <div class="dropdown">
+                                    <a class="btn btn-primary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                      Action
+                                    </a>
+
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li><a class="dropdown-item text-primary" href="{% url 'approve_withdrawals' pk=obj.id %}">approve</a></li>
+                                        <li><a class="dropdown-item text-danger" href="{% url 'decline_withdrawals' pk=obj.id %}">decline</a></li>
+
+                                    </ul>
+                                </div>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+
+{% endblock content %}

@@ -1,0 +1,234 @@
+{% extends "management_layout.html" %} {% block style %}
+<style>
+    .accordion-faq .accordion-item {
+        margin-bottom: 8px;
+    }
+    
+    .accordion-faq .accordion-item.active .accordion-title {
+        background: #DA5344;
+    }
+    
+    .accordion-faq .accordion-item.active .accordion-title__arrow i {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    
+    .accordion-faq .accordion-title {
+        padding: 13px 40px 13px 10px;
+        position: relative;
+        background-color: #f2f2f2;
+        border: 1px solid #dedede;
+        color: #000;
+        line-height: 1;
+        min-height: 20px;
+        cursor: pointer;
+    }
+    
+    .accordion-faq .accordion-title__arrow {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        display: block;
+        width: 26px;
+        height: 26px;
+        border: 1px solid #000;
+        color: #000;
+    }
+    
+    .accordion-faq .accordion-title__arrow i {
+        display: inline-block;
+        position: absolute;
+        line-height: 1;
+        font-size: 16px;
+        left: 50%;
+        top: 50%;
+        margin: -8px 0 0 -4px;
+    }
+    
+    .accordion-faq .question-block {
+        border: 1px solid rgba(189, 189, 189, 0.23);
+        background: rgba(254, 254, 254, 0.23);
+        padding: 16px 20px;
+        font-size: 0.9375em;
+    }
+    
+    .question-block {
+        display: none;
+    }
+</style>
+
+{% endblock style %} {% block breadcrumb %}
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 d-flex align-items-center">
+                    <li class="breadcrumb-item"><a href="/management/" class="link"><i class="mdi mdi-home-outline fs-4"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Agents</li>
+                </ol>
+            </nav>
+            <h1 class="mb-0 fw-bold">Agents</h1>
+        </div>
+        <div class="col-6">
+            <div class="text-end upgrade-btn">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+
+{% endblock breadcrumb %} {% block content %}
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<div class="row mb-3">
+
+    <div class="card">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newagentModal">New</button>
+
+                <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+
+            <div id="agent-box">
+
+
+
+
+
+                <div class="accordion accordion-faq">
+                    {% for obj in agents %}
+                    <div class="accordion-item">
+                        <div class="accordion-title">{{obj.name}}<span class="accordion-title__arrow"><i class="fa fa-angle-down"></i></span></div>
+                        <div class="question-block">
+                            <table class="table table-divider">
+
+                                <tbody>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td class="text-center"><span id="with-user">{{obj.name}}</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Currency</td>
+                                        <td class="text-center text-danger"><span id="with-amount">USD</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Min / Max withdrawal</td>
+                                        <td class="text-center  text-warning  "><span id="with-method">5 / 2000</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Commission on deposits</td>
+                                        <td class="text-center"><span>0%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Commission on withdrawals</td>
+                                        <td class="text-center"><span>0%</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Website</td>
+                                        <td class="text-center"><a href="{{obj.website}}">{{obj.website}}</span></td>
+                                                </tr>
+        
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td class="text-center"><a href="mailto:{{obj.email}}" target="_blank">{{obj.email}}</span></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>Tel</td>
+                                                    <td class="text-center"><a href="tel:{{obj.tel}}">{{obj.tel}}</a></td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>Further information</td>
+                                        <td class="text-center">
+                                            <p>{{obj.further_information}}.</p>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="newagentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Create A new Agents</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{% url 'mwithdrawal' %}"> {% csrf_token %}
+                <div class="modal-body">
+                    <a href="{% url 'newagents' %}">New agent</a>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                    <input class="btn btn-success" type="submit" name="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block script %}
+
+<script>
+    //$('.accordion >.accordion-item:eq(0) .accordion-title').addClass('active').next().slideDown().parent().addClass('active');
+    $('.accordion .accordion-title').click(function(j) {
+        var dropDown = $(this).closest('.accordion-item').find('.question-block');
+        console.log(dropDown)
+        $(this).closest('.accordion').find('.question-block').not(dropDown).slideUp();
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active').parent().removeClass('active');
+        } else {
+            $(this).closest('.accordion').find('.accordion-title.active').removeClass('active').parent().removeClass('active');
+            $(this).addClass('active').parent().addClass('active');
+        }
+        dropDown.stop(false, true).slideToggle();
+        j.preventDefault();
+    });
+</script>
+{% endblock script %}

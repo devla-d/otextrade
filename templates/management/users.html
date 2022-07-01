@@ -1,0 +1,71 @@
+{% extends "management_layout.html" %} {% block breadcrumb %}
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row align-items-center">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 d-flex align-items-center">
+                    <li class="breadcrumb-item"><a href="/management/" class="link"><i class="mdi mdi-home-outline fs-4"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Users</li>
+                </ol>
+            </nav>
+            <h1 class="mb-0 fw-bold">Users</h1>
+        </div>
+        <div class="col-6">
+            <div class="text-end upgrade-btn">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+
+{% endblock breadcrumb %} {% block content %}
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<div class="row mb-3">
+
+    <div class="card">
+        <div class="card-body">
+            <!-- <h4 class="card-title">Striped rows</h4>
+            <h6 class="card-subtitle">Use <code>.table-striped</code> to add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.</h6> -->
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in users %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{obj.first_name}} {{obj.last_name}}</td>
+                        <td> ${{obj.balance|floatformat:2 }}</td>
+                        <td><a href="{% url 'usersDetail' pk=obj.pk %}" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<!-- ============================================================== -->
+<!-- Sales chart -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+
+
+{% endblock content %}

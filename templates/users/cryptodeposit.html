@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zxx" dir="ltr">
+
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="Premium HTML5 Template by Indonez">
+    <meta name="keywords" content="blockit, uikit3, indonez, handlebars, scss, vanilla javascript">
+    <meta name="author" content="Indonez">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#e9e8f0" />
+    <!-- Site Properties -->
+    <title>Dashboard - Profit HTML5 Template</title>
+    <!-- Critical preload -->
+    <link rel="preload" href="/static/js/vendors/uikit.min.js" as="script">
+    <link rel="preload" href="/static/js/vendors/dataTables.uikit.js" as="script">
+    <link rel="preload" href="/static/js/vendors/datatables.min.js" as="script">
+    <link rel="preload" href="/static/css/vendors/uikit.min.css" as="style">
+    <link rel="preload" href="/static/css/vendors/dataTables.uikit.min.css" as="style">
+    <link rel="preload" href="/static/css/vendors/fontawesome/css/all.min.css" as="style">
+    <!-- Font preload -->
+    <link rel="preload" href="/static/fonts/lato-v16-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/lato-v16-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/montserrat-v14-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Favicon and apple icon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/vendors/uikit.min.css">
+
+    <link rel="stylesheet" href="/static/css/vendors/dataTables.uikit.min.css">
+    <link rel="stylesheet" href="/static/css/vendors/datatables.min.css">
+    <link rel="stylesheet" href="/static/css/vendors/fontawesome/css/all.min.css" as="style">
+    <link rel="stylesheet" href="/static/css/vendors/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+
+
+
+</head>
+
+<body>
+    <div class="notify">
+        <div class="notify-icon-box">
+            <span class="fas fa-check"></span>
+        </div>
+
+        <div class="notify-body-box">
+            <h2 class="notify-title">
+
+            </h2>
+            <p class="notify-body"></p>
+        </div>
+    </div>
+    <!-- preloader begin -->
+    <div class="in-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <!-- preloader end -->
+
+
+    <header>
+
+
+        <nav class="uk-navbar-container">
+            <div class="top-bari uk-section">
+                <div class="top-bar-date">
+                    <span id="date-bar">
+
+                </span>
+                </div>
+                <div class="top-bar-lang">
+                    <span class="fas fa-globe"></span>
+                    <div class="lang-select-con">
+                        <select class="  " id="language" onchange="changeLanguageByButtonClick()">
+                           
+                          
+                             <option value="nl">Dutch</option>
+                             <option value="en" selected>English</option>
+                         
+                             <option value="fr">French</option>
+                             
+                             <option value="de">German</option>
+                          
+                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="top-barii">
+
+                <a class="uk-logo bar-logo" href="index.html">
+                    <img class="in-offset-top-10" src="/static/images/in-lazy.svg" data-src="/static/images/in-logo-1.svg" alt="logo" width="130" height="36" data-uk-img>
+                </a>
+                <div class="bar-main-menu">
+                    <ul>
+                        <li><a href="#">Trade</a></li>
+                        <li><a href="#">Profit table</a></li>
+                        <li><a href="#">Cashier</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Security</a></li>
+
+                    </ul>
+                </div>
+                <div class="account-menu">
+                    <ul>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </nav>
+
+
+    </header>
+
+
+    <!-- breadcrumb content begin -->
+    <div class="uk-section uk-padding-remove-vertical mt-2">
+        <div class="uk-container">
+            <div class="uk-grid">
+                <div class="uk-width-1-1 in-breadcrumb">
+                    <ul class="uk-breadcrumb uk-float-left">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">Cashier</a></li>
+                        <li><span>Deposit</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb content end -->
+
+
+    <main>
+
+
+
+
+        <div class="uk-section">
+
+            <div class="uk-container">
+                <div class="deposit-box">
+                    <div class="cryptodeposit-box uk-text-center">
+                        <h4>Account ID : Cr192829</h4>
+                        <h3>Send only Litecoin (LTC) to this address.
+                        </h3>
+                        <p>Sending any other digital currency will result in the loss of your deposit</p>
+                        <div class="text-center">
+
+                            <img src="https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0" class="qr-code img-thumbnail img-responsive" />
+                        </div>
+                        <div class="walletadd mt-2">
+                            <div class="uk-margin-small uk-width-1-6@l   uk-inline">
+                                <a class="uk-form-icon uk-form-icon-flip fas fa-clipboard fa-2x" style="
+                                margin-top: 4px;" onclick="copyFunction('walletadd')" uk-tooltip="Copy address">
+                                    <span id="myTooltip">   </span>
+                                </a>
+                                <input type="text" id="walletadd" class="uk-input" value="xbnsjhskshaaakalakakakw92jsms" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+    <div class="ptb-3"></div>
+
+
+
+
+
+    <div id="mobile-nav">
+        <ul>
+            <li>
+                <a href="">
+                    <i class=" fas fa-coins"></i>
+                    <p>Profit</p>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <i class="la la-exchange"></i>
+                    <p>Trading</p>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="togglemn">
+                    <i class="fas fa-align-justify"></i>
+                    <p>More</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+    <div id="mobile-nav-menu" class="">
+        <ul>
+            <li><a href="">Cashier</a></li>
+            <li><a href="">Profile</a></li>
+            <li><a href="">security</a></li>
+            <li><a href="">Logout</a></li>
+        </ul>
+    </div>
+
+
+
+
+    <div class="footer">
+        <p>Copywright@Otex.com
+            <script>
+                document.write(Date.toString())
+            </script>
+        </p>
+    </div>
+
+
+    <!-- Javascript -->
+    <script src="/static/js/vendors/uikit.min.js"></script>
+    <script src="/static/js/vendors/jquery/jquery.min.js"></script>
+    <script src="/static/js/vendors/datatables.min.js"></script>
+    <script src="/static/js/vendors/dataTables.uikit.js"></script>
+    <script>
+        setInterval(function() {
+            var dt = new Date();
+            var x1 = dt.toUTCString();
+            document.getElementById("date-bar").innerHTML = x1;
+        }, 1000)
+
+
+        $('.togglemn').on('click', function(e) {
+            e.preventDefault()
+            $('#mobile-nav-menu').toggleClass('active')
+        })
+
+        function copyFunction(input) {
+            var copyText = document.getElementById(input);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+
+            showNotify('Sucessfull', "Address Copied To clipboard", limit = 2000)
+
+
+        }
+
+
+        function showNotify(title, body, limit = 1000) {
+            if (limit > 5000) {
+                console.log('Notify Cant exceed 5 seconds')
+                limit = 1000
+            }
+            $('.notify-title').text(`${title}`);
+            $('.notify-body').text(`${body}`);
+            $('.notify').addClass('active');
+            setTimeout(function() {
+                $('.notify').removeClass('active');
+
+            }, limit)
+
+        }
+
+
+
+
+        function htmlEncode(value) {
+            return $('<div/>').text(value)
+                .html();
+        }
+
+        $(document).ready(function() {
+
+
+
+
+
+            let finalURL =
+                'https://chart.googleapis.com/chart?cht=qr&chl=' +
+                htmlEncode($('#walletadd').val()) +
+                '&chs=160x160&chld=L|0'
+
+            // Replace the src of the image with
+            // the QR code image
+            $('.qr-code').attr('src', finalURL);
+
+
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+{% extends "users_layout.html" %} {% load static %} {% block title %} account Limits{% endblock title %} {% block style %} {% endblock style %} {% block breadcrumb %}
+<!-- breadcrumb content begin -->
+<div class="uk-section uk-padding-remove-vertical mt-2">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1 in-breadcrumb">
+                <ul class="uk-breadcrumb uk-float-left">
+                    <li><a href="/">Home</a></li>
+                    <li><span>Account Limits</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb content end -->
+{% endblock breadcrumb %} {% block content %}
+
+<div class="uk-section">
+    <div class="uk-container">
+
+
+        <div>
+            <h3>{{user.username}} - Withdrawal Limits</h3>
+
+            <h5>your Withdrawal limit is : <span>$3000</span></h5>
+            <h5>you have already withdrawn: <span>${{user.total_withdraw|floatformat:2 }}</span></h5>
+            <h5>Your balance is ${{user.balance|floatformat:2 }}</h5>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %} {% block script %} {% endblock script %}
