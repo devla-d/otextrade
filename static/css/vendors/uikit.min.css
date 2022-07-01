@@ -4038,7 +4038,7 @@ ul.uk-nav-sub li a i {
 .uk-sticky.uk-active a.uk-logo {
     width: 130px;
     height: 36px;
-    background: url(../../images/in-logo-1.svg);
+    background: url(../../images/otlogo.png);
     margin-top: -2px
 }
 
@@ -4190,7 +4190,7 @@ ul.uk-nav-sub li a i {
 }
 
 @media (min-width:960px) {
-    :not(.uk-offcanvas-flip).uk-offcanvas-container-animation {
+     :not(.uk-offcanvas-flip).uk-offcanvas-container-animation {
         left: 350px
     }
     .uk-offcanvas-flip.uk-offcanvas-container-animation {
@@ -10205,8 +10205,8 @@ iframe.uk-cover {
 
 @media print {
     *,
-    ::after,
-    ::before {
+     ::after,
+     ::before {
         background: 0 0!important;
         color: #000!important;
         box-shadow: none!important;
